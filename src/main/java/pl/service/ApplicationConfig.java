@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(pl.CrossOriginResourceSharingFilter.class);
         resources.add(pl.service.NapUzytkownikFacadeREST.class);
+        resources.add(pl.service.NapvFirmyKonsorcjumFacadeREST.class);
     }
     
 }

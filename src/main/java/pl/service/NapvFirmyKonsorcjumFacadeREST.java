@@ -5,8 +5,11 @@
  */
 package pl.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import java.util.List;
 import javax.ejb.Stateless;
+import com.google.gson.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -18,6 +21,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.json.JSONArray;
+import org.json.JSONException;
 import pl.models.NapvFirmyKonsorcjum;
 
 /**
@@ -66,6 +72,7 @@ public class NapvFirmyKonsorcjumFacadeREST extends AbstractFacade<NapvFirmyKonso
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<NapvFirmyKonsorcjum> findAll() {
+        System.out.println("OK-test-findAll");
         return super.findAll();
     }
 
@@ -82,6 +89,30 @@ public class NapvFirmyKonsorcjumFacadeREST extends AbstractFacade<NapvFirmyKonso
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("test")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String test() {
+        System.out.println("OK-test");
+        return "OK-test";
+    }
+    
+    @POST
+    @Path("testpost")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response testpost(String request) throws JSONException {
+        Gson gson = new Gson();
+        JsonObject req = gson.fromJson (request, JsonElement.class).getAsJsonObject();
+        System.out.println(req);
+        
+        String result = "OK-test-post";
+        JSONArray jsonArray = new JSONArray(result);
+        System.out.println("OK-test");
+        return Response.ok().entity(gson.toJson(jsonArray)).build();
+    }
+    
+    
 
     @Override
     protected EntityManager getEntityManager() {
